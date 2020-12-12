@@ -10,9 +10,10 @@ class GAT(nn.Module):
         super(GAT, self).__init__()
         self.dropout = dropout
 
+        #形成有nheads个N*nhid的矩阵（注意力机制后的特征矩阵）
         self.attentions = [GraphAttentionLayer(nfeat, nhid, dropout=dropout, alpha=alpha, concat=True) for _ in range(nheads)]
-        for i, attention in enumerate(self.attentions):
-            self.add_module('attention_{}'.format(i), attention)
+        # for i, attention in enumerate(self.attentions):
+        #     self.add_module('attention_{}'.format(i), attention)  #什么作用？似乎没用到
 
         self.out_att = GraphAttentionLayer(nhid * nheads, nclass, dropout=dropout, alpha=alpha, concat=False)
 
